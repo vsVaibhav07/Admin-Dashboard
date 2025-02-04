@@ -14,19 +14,18 @@ function App() {
   
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        setIsLoggedIn(true); // User is logged in
+        setIsLoggedIn(true); 
       } else {
-        setIsLoggedIn(false); // User is logged out
+        setIsLoggedIn(false); 
       }
-      setIsAuthChecked(true); // Auth check is completed
+      setIsAuthChecked(true); 
     });
 
-    // Cleanup listener on unmount
     return () => unsubscribe();
   }, []);
 
   if (!isAuthChecked) {
-    // Show loading spinner until auth state is checked
+    
     return <div className="flex justify-center items-center h-screen"><div className="spinner-border animate-spin"></div></div>;
   }
 
