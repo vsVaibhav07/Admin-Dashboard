@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAuth, signOut } from "firebase/auth";
 
 const SideBar = () => {
+
   const navigate = useNavigate();
   const auth = getAuth();
 
@@ -18,6 +19,7 @@ const SideBar = () => {
   };
 
   return (
+    <>
     <div className="w-1/5 bg-white h-screen shadow-lg p-6 space-y-8">
       <h1 className="text-xl font-semibold text-gray-700 bg-blue-50 p-4 rounded-lg shadow-md mb-4">
         Dashboard
@@ -37,6 +39,8 @@ const SideBar = () => {
         Logout
       </div>
     </div>
+    </>
+    
   );
 };
 

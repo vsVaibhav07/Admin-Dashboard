@@ -31,7 +31,8 @@ function SignupPage() {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
-        password
+        password,
+        name,
       );
       const user = userCredential.user;
 

@@ -11,7 +11,7 @@ function App() {
   const [isAuthChecked, setIsAuthChecked] = useState(false);
 
   useEffect(() => {
-    // Listen to Firebase auth state changes
+  
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setIsLoggedIn(true); // User is logged in

@@ -52,6 +52,7 @@ const StudentTable = () => {
                 <div className="flex justify-center bg-red-500 text-white rounded hover:bg-red-700">
                   <Delete studentId={student.id} />
                 </div>
+                
               </td>
             </tr>
           ))}

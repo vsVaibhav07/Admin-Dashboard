@@ -20,6 +20,7 @@ function LoginPage({ onLogin }) {
     setLoading(true);
     try {
       await signInWithEmailAndPassword(auth, email, password);
+      console.log(email);
       onLogin();
       navigate("/students");
     } catch (err) {
