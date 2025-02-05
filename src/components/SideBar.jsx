@@ -2,16 +2,19 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAuth, signOut } from "firebase/auth";
 
-const SideBar = () => {
+const SideBar = ({showSidebar,onLogout}) => {
 
   const navigate = useNavigate();
   const auth = getAuth();
 
+ 
+
   const handleLogout = async () => {
     try {
-      await signOut(auth); // Sign out the user
-      alert("Logged out successfully!"); // Notify the user
-      navigate("/login"); // Redirect to login page
+      await signOut(auth); 
+      alert("Logged out successfully!"); 
+      onLogout();
+      navigate("/login"); 
     } catch (error) {
       console.error("Error during logout:", error);
       alert("Failed to logout. Please try again.");
@@ -20,7 +23,8 @@ const SideBar = () => {
 
   return (
     <>
-    <div className="w-1/5 bg-white h-screen shadow-lg p-6 space-y-8">
+    
+    <div className={`"w-1/5 bg-white h-screen shadow-lg p-6 space-y-8 md:block " ${showSidebar?"":"hidden"}`}>
       <h1 className="text-xl font-semibold text-gray-700 bg-blue-50 p-4 rounded-lg shadow-md mb-4">
         Dashboard
       </h1>

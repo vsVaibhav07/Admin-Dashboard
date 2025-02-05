@@ -1,21 +1,22 @@
 import React, { useState } from "react";
 import { database } from "../firebase";
-import { ref, push } from "firebase/database";
+import { ref, set } from "firebase/database";
 
-const StudentForm = ({ setShowForm }) => {
+
+const StudentForm = ({ setShowForm,student }) => {
   const [formData, setFormData] = useState({
-    userID:"",
-    name:"",
-    father_Name: "",
-    age: "",
-    gender: "",
-    phone_no: "",
-    email: "",
-    class: "",
-    section: "",
-    roll_no: "",
-    course: "",
-    admission_Year: "",
+    userID:student.userID,
+    name:student.name,
+    father_Name: student.father_Name,
+    age: student.age,
+    gender: student.gender,
+    phone_no: student.phone_no,
+    email: student.email,
+    class: student.class,
+    section: student.section,
+    roll_no: student.roll_no,
+    course: student.course,
+    admission_Year: student.admission_Year,
   });
 
 
@@ -24,35 +25,26 @@ const StudentForm = ({ setShowForm }) => {
     setFormData({ ...formData, [name]: value });
   };
 
- 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const studentsRef = ref(database, `students`); 
-      await push(studentsRef, formData); 
-      alert("Data saved successfully!");
+  
+  
 
-   
-      setFormData({
-        userID: "",
-        name: "",
-        father_Name: "",
-        age: "",
-        gender: "",
-        phone_no: "",
-        email: "",
-        class: "",
-        section: "",
-        roll_no: "",
-        course: "",
-        admission_Year: "",
-      });
-      setShowForm(false);
-    } catch (error) {
-      console.error("Error saving data:", error);
-      alert("Failed to save data. Please try again.");
+
+  const updateData=async(id,formData)=>{
+    try{
+        const studentRef = ref(database, 'students/' + id);
+
+        await set(studentRef,formData);
+        alert("Student Data Updated Successfully");
+        setShowForm(false);
+        
+
     }
-  };
+    catch(error){
+        console.log(error)
+    }
+  }
+ 
+
 
   return (
     <div className="fixed inset-0 z-50 bg-gray-900 bg-opacity-50 flex justify-center items-start pt-10">
@@ -67,7 +59,7 @@ const StudentForm = ({ setShowForm }) => {
           </h1>
         </div>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={(e) => { e.preventDefault(); updateData(student.id, formData); }}>
          
           <div className="mb-4">
             <label className="block text-sm font-medium mb-2">ID</label>
@@ -220,7 +212,7 @@ const StudentForm = ({ setShowForm }) => {
             type="submit"
             className="w-full cursor-pointer bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
           >
-            Submit
+            Update
           </button>
         </form>
       </div>
