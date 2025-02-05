@@ -8,11 +8,12 @@ const Student = ({onLogout}) => {
   const [showSidebar, setShowSidebar] = useState(false);
   return (
     <div className="flex">
+      
       <SideBar showSidebar={showSidebar} onLogout={onLogout} />
 
       <div
         onClick={() => setShowSidebar(false)}
-        className="bg-blue-50 min-h-screen w-full p-6"
+        className="bg-blue-50 z-40 min-h-screen w-full p-6"
       >
         <div className="flex  justify-between items-center mb-6">
           <div
@@ -20,9 +21,7 @@ const Student = ({onLogout}) => {
               e.stopPropagation();
               setShowSidebar(true);
             }}
-            className={`md:hidden bg-blue-100 w-10 h1 text-4xl m-5 ${
-              showSidebar ? "hidden" : "block"
-            }`}
+            className={`md:hidden bg-blue-100 w-10 h1 text-4xl m-5 `}
           >
             ☰
           </div>
