@@ -24,7 +24,7 @@ const SideBar = ({showSidebar,onLogout}) => {
   return (
     <>
     
-    <div className={`"w-1/5 bg-white fixed md:relative z-50 h-screen shadow-lg p-6 space-y-8 md:block " ${showSidebar?"w64 md:w-auto":"w-0 hidden md:w-auto "}`}>
+    <div className={`"w-1/5 bg-white fixed md:relative z-50 md:z-0 h-screen shadow-lg p-6 space-y-8 md:block " ${showSidebar?"w64 md:w-auto":"w-0 hidden md:w-auto "}`}>
       <h1 className="text-xl font-semibold text-gray-700 bg-blue-50 p-4 rounded-lg shadow-md mb-4 transition-all duration-1000 ease-in-out">
         Dashboard
       </h1>
