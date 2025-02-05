@@ -3,6 +3,7 @@ import { database } from "../firebase";
 import { ref, onValue } from "firebase/database";
 import Delete from "./Delete";
 import Edit from "./Edit";
+import ViewInfo from "./ViewInfo";
 
 const StudentTable = () => {
   const [students, setStudents] = useState([]);
@@ -49,11 +50,14 @@ const StudentTable = () => {
               <td className="px-4 py-2">{student.roll_no}</td>
               <td className="px-4 py-2 space-x-2">
                 <div className="flex gap-1">
-                  <div className="flex w-14 justify-center bg-red-500 text-white rounded hover:bg-red-700">
+                  <div className="flex w-14 h-8 justify-center bg-red-500 text-white rounded hover:bg-red-700">
                     <Delete studentId={student.id} />
                   </div>
-                  <div className="flex w-14 justify-center bg-blue-500 text-white rounded hover:bg-blue-600">
+                  <div className="flex w-14 h-8 justify-center bg-blue-500 text-white rounded hover:bg-blue-600">
                     <Edit student={student} />
+                  </div>
+                  <div className="flex w-14 h-8 justify-center bg-blue-500 text-white rounded hover:bg-blue-600">
+                    <ViewInfo student={student} />
                   </div>
                 </div>
               </td>
