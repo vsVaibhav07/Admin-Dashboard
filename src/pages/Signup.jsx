@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, fireStore } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
+import { Link } from "react-router-dom";
 
 function SignupPage() {
   const [name, setName] = useState("");
@@ -118,9 +119,9 @@ function SignupPage() {
         </button>
         <p className="mt-4 text-sm text-gray-600 text-center">
           Already have an account?{" "}
-          <a href="/login" className="text-blue-500 hover:underline">
+          <Link to="/login" className="text-blue-500 hover:underline">
             Login here
-          </a>
+          </Link>
         </p>
       </form>
     </div>
