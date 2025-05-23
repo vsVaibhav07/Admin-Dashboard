@@ -1,6 +1,6 @@
-import React, { useState } from "react";
 import { ref, remove } from "firebase/database";
-import { database } from "../firebase";
+import { useState } from "react";
+import { auth, database } from "../firebase"; // Import auth
 
 const Delete = ({ studentId }) => {  
     const [isDeleting, setIsDeleting] = useState(false);
@@ -8,9 +8,13 @@ const Delete = ({ studentId }) => {
     const handleDelete = async () => {
         setIsDeleting(true);
         try {
-            const studentRef = ref(database, `students/${studentId}`); 
-            
+            const user = auth.currentUser; // Get the current logged-in user
+            if (!user) {
+                alert("User not logged in!");
+                return;
+            }
 
+            const studentRef = ref(database, `students/${user.uid}/${studentId}`); // Delete data under the user's UID
             await remove(studentRef);
             alert("Student data deleted successfully!");
         } catch (error) {

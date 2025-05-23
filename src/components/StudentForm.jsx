@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { database } from "../firebase";
-import { ref, push } from "firebase/database";
+import { push, ref } from "firebase/database";
+import { useState } from "react";
+import { auth, database } from "../firebase"; // Import auth
 
 const StudentForm = ({ setShowForm }) => {
   const [formData, setFormData] = useState({
-    userID:"",
-    name:"",
+    userID: "",
+    name: "",
     father_Name: "",
     age: "",
     gender: "",
@@ -18,21 +18,24 @@ const StudentForm = ({ setShowForm }) => {
     admission_Year: "",
   });
 
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
- 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const studentsRef = ref(database, `students`); 
-      await push(studentsRef, formData); 
+      const user = auth.currentUser; // Get the current logged-in user
+      if (!user) {
+        alert("User not logged in!");
+        return;
+      }
+
+      const studentsRef = ref(database, `students/${user.uid}`); // Save data under the user's UID
+      await push(studentsRef, formData);
       alert("Data saved successfully!");
 
-   
       setFormData({
         userID: "",
         name: "",
@@ -68,7 +71,6 @@ const StudentForm = ({ setShowForm }) => {
         </div>
 
         <form onSubmit={handleSubmit}>
-         
           <div className="mb-4">
             <label className="block text-sm font-medium mb-2">ID</label>
             <input

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { database } from "../firebase";
-import { ref, onValue } from "firebase/database";
+import { onValue, ref } from "firebase/database";
+import { useEffect, useState } from "react";
+import { auth, database } from "../firebase"; // Import auth
 import Delete from "./Delete";
 import Edit from "./Edit";
 import ViewInfo from "./ViewInfo";
@@ -9,7 +9,13 @@ const StudentTable = () => {
   const [students, setStudents] = useState([]);
 
   useEffect(() => {
-    const studentsRef = ref(database, "students");
+    const user = auth.currentUser; // Get the current logged-in user
+    if (!user) {
+      alert("User not logged in!");
+      return;
+    }
+
+    const studentsRef = ref(database, `students/${user.uid}`); // Fetch data under the user's UID
     const unsubscribe = onValue(studentsRef, (snapshot) => {
       const data = snapshot.val();
 

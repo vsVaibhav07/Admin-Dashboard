@@ -1,12 +1,11 @@
-import React, { useState } from "react";
-import { database } from "../firebase";
 import { ref, set } from "firebase/database";
+import { useState } from "react";
+import { auth, database } from "../firebase"; // Import auth
 
-
-const StudentForm = ({ setShowForm,student }) => {
+const StudentForm = ({ setShowForm, student }) => {
   const [formData, setFormData] = useState({
-    userID:student.userID,
-    name:student.name,
+    userID: student.userID,
+    name: student.name,
     father_Name: student.father_Name,
     age: student.age,
     gender: student.gender,
@@ -19,32 +18,27 @@ const StudentForm = ({ setShowForm,student }) => {
     admission_Year: student.admission_Year,
   });
 
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  
-  
+  const updateData = async (id, formData) => {
+    try {
+      const user = auth.currentUser; // Get the current logged-in user
+      if (!user) {
+        alert("User not logged in!");
+        return;
+      }
 
-
-  const updateData=async(id,formData)=>{
-    try{
-        const studentRef = ref(database, 'students/' + id);
-
-        await set(studentRef,formData);
-        alert("Student Data Updated Successfully");
-        setShowForm(false);
-        
-
+      const studentRef = ref(database, `students/${user.uid}/${id}`); // Update data under the user's UID
+      await set(studentRef, formData);
+      alert("Student Data Updated Successfully");
+      setShowForm(false);
+    } catch (error) {
+      console.log(error);
     }
-    catch(error){
-        console.log(error)
-    }
-  }
- 
-
+  };
 
   return (
     <div className="fixed inset-0 z-50 bg-gray-900 bg-opacity-50 flex justify-center items-start pt-10">
@@ -59,8 +53,12 @@ const StudentForm = ({ setShowForm,student }) => {
           </h1>
         </div>
 
-        <form onSubmit={(e) => { e.preventDefault(); updateData(student.id, formData); }}>
-         
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            updateData(student.id, formData);
+          }}
+        >
           <div className="mb-4">
             <label className="block text-sm font-medium mb-2">ID</label>
             <input
